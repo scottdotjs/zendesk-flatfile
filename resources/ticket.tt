@@ -1,0 +1,76 @@
+<!DOCTYPE html>[%# Confused? See http://template-toolkit.org/docs/ %]
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>[#[% ticket.id %]] [% ticket.subject FILTER html_entity %] ([% IF ticket.organization %][% ticket.organization.name FILTER html_entity %]: [% END %][% ticket.requester.name FILTER html_entity %])</title>
+	<link rel="stylesheet" type="text/css" href="../resources/ticket.css" />
+</head>
+<body>
+<h1><span class="ticket_id">#[% ticket.id %]</span> <span id="subject">[% ticket.subject FILTER html_entity %]</span></h1>
+<h2>[% IF ticket.organization %][% ticket.organization.name %]: [% END %]<a href="mailto:[% ticket.requester.email %]">[% ticket.requester.name FILTER html_entity %]</a>, [% ticket.created_at.replace('(....)-(..)-(..)T(..:..).*Z', '$3/$2/$1 $4') %]</h2>
+<div id="metadata">
+<dl>
+	<dt>Priority</dt>
+	<dd>[% ticket.priority %]</dd>
+	<dt>Assigned to</dt>
+	<dd><a href="mailto:[% ticket.assignee.email %]">[% ticket.assignee.name FILTER html_entity %]</a></dd>
+	<dt>Status</dt>
+	<dd>[% ticket.status %]</dd>
+	<dt>Last updated</dt>
+	<dd>[% ticket.updated_at.replace('(....)-(..)-(..)T(..:..).*Z', '$3/$2/$1 $4') %]</dd>
+	<dt>Tags</dt>
+	<dd>[% ticket.tags.sort.join(', ') %]</dd>
+[% FOREACH field IN ticket.custom_fields %]
+[%- field_id = field.id -%]
+[%- IF custom_fields.$field_id %][%# Not stored in ticket data, we need to check our own index %]
+	<dt>[% custom_fields.$field_id %]</dt>
+	<dd>[% field.value %]</dd>
+[%- END %]
+[% END %]
+</dl>
+</div>
+<div id="description">
+<h3>Description</h3>
+<p>
+[% ticket.description FILTER html_entity %]
+[%- IF ticket.submitter.signature %]
+<span class="submitter_signature">[% ticket.submitter.signature FILTER html_entity %]</span>
+[% END %]
+</p>
+</div>
+<div id="comments">
+[% FOREACH comment IN ticket.comments.reverse %]
+<div class="comment
+[%- IF comment.public == 0 -%]
+ private"><span class="private_label">Private comment</span>
+[%- ELSE -%]
+">
+[%- END %]
+<a id="[% comment.comment_number %]" class="comment_number" href="#[% comment.comment_number %]">[% comment.comment_number %]</a><br />
+<span class="commenter">
+[%- IF comment.author -%]
+[% comment.author FILTER html_entity %]
+[%- ELSE -%]
+[%#- If someone besides the requester and assignee has commented, finding their name would 
+require looking up their Zendesk user ID, which would require significant additional complexity
+in the tool. Sorry. -%]
+[[% comment.author_id %]]
+[%- END %]</span> <span class="comment_date">[% comment.created_at.replace('(....)-(..)-(..)T(..:..).*Z', '$3/$2/$1 $4') %]</span><br />
+<span class="comment_text">[% comment.plain_body.replace('#(\d+)', '<a href="$1.html">#$1</a>') %]</span>
+[% IF comment.attachments.size > 0 %]
+<div class="attachments">
+<p>
+Attachments:
+</p>
+<ol>
+[% FOREACH attachment IN comment.attachments -%]
+	<li><a href="../attachments/[% ticket.id %]/[% comment.comment_number %]_[% attachment.file_name %]">[% attachment.file_name %]</a></li>
+[% END -%]
+</ol>
+</div>
+[% END %]
+</div>
+[% END %]
+</div>
+</body>
+</html>
