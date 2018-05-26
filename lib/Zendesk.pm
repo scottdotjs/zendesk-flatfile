@@ -15,7 +15,7 @@ sub new {
 	my $args = shift;
 
 	$self->{$_} = $args->{$_} foreach qw(
-		attachments custom_fields delay indices_dir quiet
+		attachments_dir custom_fields delay indices_dir quiet
 		resources_dir tickets_json_dir tickets_html_dir update
 	);
 
@@ -43,7 +43,9 @@ sub download_attachments {
 
 		$file = encode_utf8 $file;
 
-		my $dir = $self->{attachments} . "/$ticket_id";
+		die "Attachments directory doesn't exist" unless -d $self->{attachments_dir};
+
+		my $dir = $self->{attachments_dir} . "/$ticket_id";
 
 		mkdir $dir unless -d $dir && -w $dir;
 
