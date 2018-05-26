@@ -24,7 +24,7 @@ sub new {
 
 sub download_attachments {
 	my $self = shift;
-	my $index_file = $self->{file};
+	my $index_file = $self->{indices_dir} . '/attachments.csv';
 	my $delay      = $self->{delay};
 
 	my $index = read_text $index_file;
