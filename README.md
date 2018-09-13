@@ -47,6 +47,7 @@ This tool has the following non-core prerequisites:
 - [Sort::Naturally](https://metacpan.org/pod/Sort::Naturally)
 - [Template::Toolkit](https://metacpan.org/pod/Template::Toolkit)
 - [WWW::Mechanize](https://metacpan.org/pod/WWW::Mechanize)
+- [Config::Tiny](https://metacpan.org/pod/Config::Tiny)
 
 Once these are installed (you can use the [CPAN](https://metacpan.org/pod/CPAN)
 or [CPANPLUS](https://metacpan.org/pod/CPANPLUS) command line tools to do
@@ -62,6 +63,9 @@ and `resources` has the output template file and stylesheet.
 In the `custom_fields` section, enter the IDs and names of any [custom ticket
 fields](https://support.zendesk.com/hc/en-us/articles/203661496-Adding-custom-fields-to-your-tickets-and-support-request-forms)
 that you've set up, in the format `00000000 = Name`.
+
+Once you have confirmed that the desired `directories` config is in place, you'll need to create the target directories before the first run, with something like
+`$ mkdir tickets_json tickets_html attachments indices`.
 
 ## USAGE
 
