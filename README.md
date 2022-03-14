@@ -1,5 +1,9 @@
 # Zendesk export flat file maker
 
+## ⚠️ Warning
+
+This program was written in 2017 and probably doesn't work any more.
+
 ## Description
 
 This is a tool, written in Perl, to convert a Zendesk Support JSON export file
