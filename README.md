@@ -1,15 +1,6 @@
 # Zendesk export flat file maker
 
-## AUTHOR
-
-Scott Martin - <scottmartin.code@gmail.com>
-
-## LICENSE
-
-This software is copyright 2017 Scott Martin. It is provided subject to the
-terms of the [Artistic License version 2.0](http://www.perlfoundation.org/artistic_license_2_0/).
-
-## SYNOPSIS
+## Description
 
 This is a tool, written in Perl, to convert a Zendesk Support JSON export file
 of tickets into individual HTML files and download all ticket attachments. The
@@ -39,7 +30,7 @@ If requested, attachments are downloaded in the following structure:
 
 `<attachments directory>/<ticket number>/<comment number>_<file name>`
 
-## SETUP
+## Setup
 
 This tool has the following non-core prerequisites:
 - [File::Slurper](https://metacpan.org/pod/File::Slurper)
@@ -67,7 +58,7 @@ that you've set up, in the format `00000000 = Name`.
 Once you have confirmed that the desired `directories` config is in place, you'll need to create the target directories before the first run, with something like
 `$ mkdir tickets_json tickets_html attachments indices`.
 
-## USAGE
+## Usage
 
 `zendesk.pl [options] tickets_dump_file.json`
 
@@ -90,9 +81,17 @@ Options:
 -nd, --no_download    Don't download attachments from Zendesk
 ```
 
-## NOTE FOR PERL PROGRAMMERS
+## Note for Perl programmers
 
 If you're using Zendesk data in Perl, you may have seen their help article
 [Getting large data sets with the Zendesk API and Perl](https://help.zendesk.com/hc/en-us/articles/229137047-Getting-large-data-sets-with-the-Zendesk-API-and-Perl). It
 gives bad advice, suggesting that you suppress character set warnings with
-`no warnings 'utf8';`. Don't do that. Follow [this advice](https://stackoverflow.com/a/6221297/3358139).
+`no warnings 'utf8';`. Don't do that, follow [this advice](https://stackoverflow.com/a/6221297/3358139).
+
+## Author and license
+
+Copyright 2017 [Scott Martin](https://github.com/scottdotjs).
+
+Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
